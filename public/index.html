@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Login</title>
+  </head>
+  <body>
+    <a id="oauth" href="#">Login with Google</a>
+  </body>
+
+  <script>
+    let url = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+    let query = {
+        response_type: 'code',
+        client_id: '1082218993942-1ib34ft542p930gk7ilh8ngf8roopm64.apps.googleusercontent.com',
+        scope: 'openid email',
+        redirect_uri: 'http://localhost:3000/oauth',
+        state: 'http://localhost',
+        access_type: 'offline',
+    }
+
+    let qs = Object.keys(query).map((val) => {
+        return `${val}=` + encodeURIComponent(query[val])
+    }).join('&');
+
+    let formattedURL= `${url}?${qs}`;
+    let link = document.getElementById('oauth');
+
+    link.setAttribute('href', formattedURL);
+  </script>
+</html>
