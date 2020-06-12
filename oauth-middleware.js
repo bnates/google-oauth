@@ -3,9 +3,6 @@
 const superagent = require('superagent');
 const users = require('./users.js');
 
-// these are the required creds (some private - some public) for login/signup with a 3rd party service - OAuth
-const tokenServerUrl = 'https://github.com/login/oauth/access_token'; // api endpoint for getting a token
-const remoteAPI = 'https://api.github.com/user'; // take our token and make a request to this endpoint to get a user
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const API_SERVER = 'http://localhost:3000/oauth';
@@ -57,7 +54,7 @@ async function exchangeCodeForToken(code) {
 // this will use the user api endpoint to get user info/repo info
 async function getRemoteUserInfo(token) {
   // this will use the access token to get user details
-  let userResponse = await superagent.get(remoteAPI)
+  let userResponse = await superagent.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?id_token=${token}`)
     .set('user-agent', 'express-app')
     .set('Authorization', `token ${token}`);
 
